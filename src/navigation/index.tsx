@@ -24,8 +24,6 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   const { user } = useAppContext();
 
-  console.log("user", user);
-
   if (!user) {
     return <AuthNavigator />;
   }

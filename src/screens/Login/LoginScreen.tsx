@@ -1,8 +1,19 @@
-import React, { useState } from "react";
-import { Text, Card, View, Button, Colors, Toast } from "react-native-ui-lib";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Text,
+  Card,
+  View,
+  Button,
+  Colors,
+  LoaderScreen,
+  FieldContextType,
+  Checkbox,
+} from "react-native-ui-lib";
 import TextInput from "../../components/input/TextInput";
+import { signIn } from "../../modules/auth";
 import { styles } from "./styles";
 import { ScreenProps } from "./types";
+import { Alert, ScrollView } from "react-native";
 
 export default function LoginScreen({
   route,
@@ -10,30 +21,62 @@ export default function LoginScreen({
 }: ScreenProps): JSX.Element {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [secureTextEntry, setSecureTextEntry] = useState<boolean>(true);
+
+  const emailInputRef = useRef<FieldContextType>();
+  const passwordInputRef = useRef<FieldContextType>();
+
+  function onLoginPress() {
+    emailInputRef.current?.validate();
+    passwordInputRef.current?.validate();
+
+    if (
+      emailInputRef.current?.isValid() &&
+      passwordInputRef.current?.isValid()
+    ) {
+      signIn(email, password).catch((error) =>
+        Alert.alert("Notification", error)
+      );
+    }
+  }
 
   return (
-    <View flex-1 centerV>
+    <ScrollView contentContainerStyle={styles.container}>
       <Card paddingV-30 paddingH-20 marginH-20>
-        <Text text50 marginB-20>
-          Login
-        </Text>
+        <View row spread centerH marginB-20>
+          <Text text50>Login</Text>
+        </View>
 
         <TextInput
+          inputRef={emailInputRef}
           containerStyle={styles.input}
           placeholder="Email"
           value={email}
           onValueChange={setEmail}
           validate={["required", "email"]}
-          validationMessage={["Field is required", "Email is invalid"]}
+          validationMessage={["Email is required", "Email is invalid"]}
+          validateOnBlur
         />
 
         <TextInput
+          inputRef={passwordInputRef}
           placeholder="Password"
           value={password}
           onValueChange={setPassword}
-          validate={["required", "email"]}
-          validationMessage={["Field is required", "Email is invalid"]}
+          validate={["required"]}
+          validationMessage={["Field is required"]}
+          secureTextEntry={secureTextEntry}
+          validateOnBlur
         />
+
+        <View marginL-10>
+          <Checkbox
+            value={!secureTextEntry}
+            label="Show Password"
+            onValueChange={(value: boolean) => setSecureTextEntry(!value)}
+          />
+        </View>
 
         <View row center marginT-20>
           <Text>{`Don't have an account?`}</Text>
@@ -48,6 +91,7 @@ export default function LoginScreen({
 
         <View center marginT-20>
           <Button
+            onPress={() => onLoginPress()}
             label={"Login"}
             size={Button.sizes.large}
             backgroundColor={Colors.blue8}
@@ -55,6 +99,8 @@ export default function LoginScreen({
           />
         </View>
       </Card>
-    </View>
+
+      {loading && <LoaderScreen overlay color={Colors.grey40} />}
+    </ScrollView>
   );
 }

@@ -5,6 +5,7 @@ import { Props } from "./types";
 
 export default function TextInput(props: Props): JSX.Element {
   const {
+    inputRef,
     value,
     onValueChange,
     placeholder,
@@ -12,15 +13,18 @@ export default function TextInput(props: Props): JSX.Element {
     validationMessage,
     maxLength,
     validateOnBlur,
-    containerStyle
+    containerStyle,
+    secureTextEntry,
   } = props;
 
   return (
     <TextField
-      containerStyle={[styles.container, containerStyle]}
+      ref={inputRef}
+      containerStyle={[styles.container]}
+      fieldStyle={styles.fieldStyle}
       value={value}
       placeholder={placeholder}
-      floatingPlaceholder={true}
+      floatingPlaceholder={false}
       onChangeText={onValueChange}
       enableErrors={Boolean(validate)}
       validate={validate}
@@ -28,6 +32,7 @@ export default function TextInput(props: Props): JSX.Element {
       showCharCounter={Boolean(maxLength)}
       maxLength={maxLength}
       validateOnBlur={validateOnBlur}
+      secureTextEntry={secureTextEntry}
     />
   );
 }
