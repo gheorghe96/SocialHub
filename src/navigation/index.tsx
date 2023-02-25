@@ -1,12 +1,18 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import MainScreen from "../MainScreen";
+import { RootStackParamList } from "./types";
 
-const Stack = createNativeStackNavigator();
+import MainScreen from "../screens/MainScreen";
+import SettingsScreen from "../screens/SettingsScreen";
 
+const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      initialRouteName="MainScreen"
+      screenOptions={{ headerShown: false }}
+    >
       <Stack.Screen name="MainScreen" component={MainScreen} />
+      <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
     </Stack.Navigator>
   );
 }

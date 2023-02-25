@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 
-export default function SettingsSCreen(): JSX.Element {
+export default function SettingsScreen(): JSX.Element {
   return <Text>"Settings Screen"</Text>;
 }
 
