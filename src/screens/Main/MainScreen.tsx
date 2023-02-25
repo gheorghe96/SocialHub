@@ -1,6 +1,7 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 import { useAppContext } from "../../hooks/useAppContext";
+import { View, Text } from "react-native-ui-lib";
 import { ScreenProps } from "./types";
 
 export default function MainScreen({
@@ -8,7 +9,11 @@ export default function MainScreen({
   navigation,
 }: ScreenProps): JSX.Element {
   const { user } = useAppContext();
-  return <Text>Main Screen</Text>;
+  return (
+    <View useSafeArea>
+      <Text>Home Screen</Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({});
