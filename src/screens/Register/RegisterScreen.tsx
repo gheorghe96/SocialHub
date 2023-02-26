@@ -52,7 +52,6 @@ export default function RegisterScreen({
 
         <TextInput
           inputRef={emailInputRef}
-          containerStyle={styles.input}
           placeholder="Email"
           value={email}
           onValueChange={setEmail}
@@ -61,7 +60,6 @@ export default function RegisterScreen({
         />
         <TextInput
           inputRef={passwordInputRef}
-          containerStyle={styles.input}
           placeholder="Password"
           secureTextEntry
           value={password}

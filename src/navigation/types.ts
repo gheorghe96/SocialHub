@@ -1,7 +1,15 @@
 export type RootStackParamList = {
+  MainNavigator: undefined;
+};
+
+export type MainStackParamList = {
+  TabsNavigator: undefined;
+  LoginStack: undefined;
+};
+
+export type TabsStackParamsList = {
   MainScreen: undefined;
   SettingsScreen: undefined;
-  AuthStack: undefined;
 };
 
 export type LoginStackParamList = {

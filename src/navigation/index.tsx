@@ -1,11 +1,18 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { LoginStackParamList, RootStackParamList } from "./types";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import {
+  LoginStackParamList,
+  MainStackParamList,
+  RootStackParamList,
+  TabsStackParamsList,
+} from "./types";
 
 import MainScreen from "../screens/Main/MainScreen";
 import SettingsScreen from "../screens/Settings/SettingsScree";
 import { useAppContext } from "../hooks/useAppContext";
 import LoginScreen from "../screens/Login/LoginScreen";
 import RegisterScreen from "../screens/Register/RegisterScreen";
+import PostScreen from "../screens/Post/Post";
 
 const LoginStack = createNativeStackNavigator<LoginStackParamList>();
 function AuthNavigator() {
@@ -20,6 +27,29 @@ function AuthNavigator() {
   );
 }
 
+const TabsStack = createMaterialBottomTabNavigator<TabsStackParamsList>();
+function TabsNavigator() {
+  return (
+    <TabsStack.Navigator>
+      <TabsStack.Screen name="MainScreen" component={MainScreen} />
+      <TabsStack.Screen name="SettingsScreen" component={SettingsScreen} />
+    </TabsStack.Navigator>
+  );
+}
+
+const MainStack = createNativeStackNavigator<MainStackParamList>();
+function MainNavigator() {
+  return (
+    <MainStack.Navigator
+      initialRouteName="TabsNavigator"
+      screenOptions={{ headerShown: false }}
+    >
+      <MainStack.Screen name="TabsNavigator" component={TabsNavigator} />
+      <MainStack.Screen name="LoginStack" component={AuthNavigator} />
+    </MainStack.Navigator>
+  );
+}
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   const { user } = useAppContext();
@@ -30,12 +60,10 @@ function RootNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="MainScreen"
+      initialRouteName="MainNavigator"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="MainScreen" component={MainScreen} />
-      <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
-      <Stack.Screen name="AuthStack" component={AuthNavigator} />
+      <Stack.Screen name="MainNavigator" component={MainNavigator} />
     </Stack.Navigator>
   );
 }

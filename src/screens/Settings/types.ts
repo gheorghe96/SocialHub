@@ -3,9 +3,9 @@ import {
   ParamListBase,
   RouteProp,
 } from "@react-navigation/native";
-import { RootStackParamList } from "../../navigation/types";
+import { TabsStackParamsList } from "../../navigation/types";
 
 export type ScreenProps = {
-  route: RouteProp<RootStackParamList, "SettingsScreen">;
-  navigation: NavigationProp<ParamListBase>;
+  route: RouteProp<TabsStackParamsList>;
+  navigation: NavigationProp<TabsStackParamsList>;
 };

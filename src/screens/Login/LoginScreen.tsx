@@ -50,7 +50,6 @@ export default function LoginScreen({
 
         <TextInput
           inputRef={emailInputRef}
-          containerStyle={styles.input}
           placeholder="Email"
           value={email}
           onValueChange={setEmail}

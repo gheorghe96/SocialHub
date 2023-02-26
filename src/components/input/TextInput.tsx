@@ -20,7 +20,7 @@ export default function TextInput(props: Props): JSX.Element {
   return (
     <TextField
       ref={inputRef}
-      containerStyle={[styles.container]}
+      containerStyle={[styles.container, containerStyle]}
       fieldStyle={styles.fieldStyle}
       value={value}
       placeholder={placeholder}
@@ -33,6 +33,7 @@ export default function TextInput(props: Props): JSX.Element {
       maxLength={maxLength}
       validateOnBlur={validateOnBlur}
       secureTextEntry={secureTextEntry}
+      validateOnChange={!inputRef?.current?.isValid()}
     />
   );
 }

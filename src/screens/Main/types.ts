@@ -1,11 +1,7 @@
-import {
-  NavigationProp,
-  ParamListBase,
-  RouteProp,
-} from "@react-navigation/native";
-import { RootStackParamList } from "../../navigation/types";
+import { NavigationProp, RouteProp } from "@react-navigation/native";
+import { TabsStackParamsList } from "../../navigation/types";
 
 export type ScreenProps = {
-  route: RouteProp<RootStackParamList, "MainScreen">;
-  navigation: NavigationProp<ParamListBase>;
+  route: RouteProp<TabsStackParamsList>;
+  navigation: NavigationProp<TabsStackParamsList>;
 };
