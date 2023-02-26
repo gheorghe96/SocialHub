@@ -1,18 +1,14 @@
 export type RootStackParamList = {
-  MainNavigator: undefined;
+  App: TabsStackParamList;
+  PostScreen: undefined;
 };
 
-export type MainStackParamList = {
-  TabsNavigator: undefined;
-  LoginStack: undefined;
-};
-
-export type TabsStackParamsList = {
-  MainScreen: undefined;
-  SettingsScreen: undefined;
-};
-
-export type LoginStackParamList = {
+export type AuthStackParamList = {
   LoginScreen: undefined;
   RegisterScreen: undefined;
+};
+
+export type TabsStackParamList = {
+  Home: undefined;
+  Settings: undefined;
 };

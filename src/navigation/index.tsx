@@ -1,52 +1,50 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+// @ts-ignore
+import Ionicons from "react-native-vector-icons/Ionicons";
+import LoginScreen from "../screens/Login/LoginScreen";
+import RegisterScreen from "../screens/Register/RegisterScreen";
 import {
-  LoginStackParamList,
-  MainStackParamList,
+  AuthStackParamList,
   RootStackParamList,
-  TabsStackParamsList,
+  TabsStackParamList,
 } from "./types";
-
 import MainScreen from "../screens/Main/MainScreen";
 import SettingsScreen from "../screens/Settings/SettingsScree";
 import { useAppContext } from "../hooks/useAppContext";
-import LoginScreen from "../screens/Login/LoginScreen";
-import RegisterScreen from "../screens/Register/RegisterScreen";
-import PostScreen from "../screens/Post/Post";
+import PostScreen from "../screens/Post/PostScreen";
+import { getTabBarIcon } from "./utils";
+import { Colors, View } from "react-native-ui-lib";
 
-const LoginStack = createNativeStackNavigator<LoginStackParamList>();
+const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 function AuthNavigator() {
   return (
-    <LoginStack.Navigator
+    <AuthStack.Navigator
       initialRouteName="LoginScreen"
       screenOptions={{ headerShown: false }}
     >
-      <LoginStack.Screen name="LoginScreen" component={LoginScreen} />
-      <LoginStack.Screen name="RegisterScreen" component={RegisterScreen} />
-    </LoginStack.Navigator>
+      <AuthStack.Screen name="LoginScreen" component={LoginScreen} />
+      <AuthStack.Screen name="RegisterScreen" component={RegisterScreen} />
+    </AuthStack.Navigator>
   );
 }
 
-const TabsStack = createMaterialBottomTabNavigator<TabsStackParamsList>();
+const TabsStack = createMaterialBottomTabNavigator<TabsStackParamList>();
 function TabsNavigator() {
   return (
-    <TabsStack.Navigator>
-      <TabsStack.Screen name="MainScreen" component={MainScreen} />
-      <TabsStack.Screen name="SettingsScreen" component={SettingsScreen} />
-    </TabsStack.Navigator>
-  );
-}
-
-const MainStack = createNativeStackNavigator<MainStackParamList>();
-function MainNavigator() {
-  return (
-    <MainStack.Navigator
-      initialRouteName="TabsNavigator"
-      screenOptions={{ headerShown: false }}
+    <TabsStack.Navigator
+      barStyle={{ backgroundColor: Colors.white, height: 90 }}
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color }) => {
+          let iconName = getTabBarIcon(route.name, focused);
+          return <Ionicons name={iconName} size={24} color={color} />;
+        },
+        tabBarLabel: "",
+      })}
     >
-      <MainStack.Screen name="TabsNavigator" component={TabsNavigator} />
-      <MainStack.Screen name="LoginStack" component={AuthNavigator} />
-    </MainStack.Navigator>
+      <TabsStack.Screen name="Home" component={MainScreen} />
+      <TabsStack.Screen name="Settings" component={SettingsScreen} />
+    </TabsStack.Navigator>
   );
 }
 
@@ -60,10 +58,11 @@ function RootNavigator() {
 
   return (
     <Stack.Navigator
-      initialRouteName="MainNavigator"
-      screenOptions={{ headerShown: false }}
+      initialRouteName="App"
+      screenOptions={{ headerShown: false, presentation: "fullScreenModal" }}
     >
-      <Stack.Screen name="MainNavigator" component={MainNavigator} />
+      <Stack.Screen name="App" component={TabsNavigator} />
+      <Stack.Screen name="PostScreen" component={PostScreen} />
     </Stack.Navigator>
   );
 }

@@ -1,7 +1,7 @@
 import { NavigationProp, RouteProp } from "@react-navigation/native";
-import { RootStackParamList } from "../../navigation/types";
+import { MainStackParamList } from "../../navigation/types";
 
 export type ScreenProps = {
-  route: RouteProp<RootStackParamList>;
-  navigation: NavigationProp<RootStackParamList>;
+  route: RouteProp<MainStackParamList>;
+  navigation: NavigationProp<MainStackParamList>;
 };
